@@ -19,6 +19,29 @@ function changeKey() {
   document.getElementById('api-key-input').value = window._apiKey || '';
   document.getElementById('modal').style.display = 'flex';
 }
+const SCREENS = ['welcome','speaking','photo','listening','results'];
+function go(ph) {
+  SCREENS.forEach(s => {
+    const el = document.getElementById('sc-'+s);
+    if (el) el.classList.add('hidden');
+  });
+  const el = document.getElementById('sc-'+ph);
+  if (el) el.classList.remove('hidden');
+  updateNav(ph);
+  if (ph === 'speaking') setTimeout(initSpeaking, 50);
+  if (ph === 'photo') setTimeout(initPhoto, 50);
+  if (ph === 'results') setTimeout(renderResults, 50);
+  window.scrollTo(0, 0);
+}
+function navTo(ph) { go(ph); }
+function updateNav(ph) {
+  const map = {speaking:1, photo:2, listening:3, results:4};
+  const cur = map[ph] || 0;
+  [1,2,3,4].forEach(n => {
+    const el = document.getElementById('np-'+n);
+    if (el) el.className = 'nstep' + (n === cur ? ' active' : n < cur ? ' done' : '');
+  });
+}
 </script>
 <style>
 /* ─── TOKENS ─────────────────────────────────────────── */
@@ -1198,30 +1221,6 @@ window.onload = () => {
   initWave('wv1', 18); initWave('wv2', 18);
   renderHV();
 };
-
-/* ── NAVIGATION ──────────────────────────────────────── */
-const SCREENS = ['welcome','speaking','photo','listening','results'];
-function go(ph) {
-  SCREENS.forEach(s => {
-    const el = document.getElementById('sc-'+s);
-    if (el) el.classList.add('hidden');
-  });
-  document.getElementById('sc-'+ph).classList.remove('hidden');
-  updateNav(ph);
-  if (ph === 'speaking') initSpeaking();
-  if (ph === 'photo') initPhoto();
-  if (ph === 'results') renderResults();
-  window.scrollTo(0, 0);
-}
-function navTo(ph) { go(ph); }
-function updateNav(ph) {
-  const map = {speaking:1, photo:2, listening:3, results:4};
-  const cur = map[ph] || 0;
-  [1,2,3,4].forEach(n => {
-    const el = document.getElementById('np-'+n);
-    el.className = 'nstep' + (n === cur ? ' active' : n < cur ? ' done' : '');
-  });
-}
 
 /* ── SPEAKING ────────────────────────────────────────── */
 function initSpeaking() {
