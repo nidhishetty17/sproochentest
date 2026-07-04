@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sproochentest — INLL Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/tabler-icons.min.css">
+<style>
+/* ─── TOKENS ─────────────────────────────────────────── */
+:root {
+  --orange: #E8622A;
+  --orange-2: #F07A47;
+  --pink: #D4476B;
+  --pink-2: #E26585;
+  --orange-tint: #FEF0E9;
+  --pink-tint: #FDEEF3;
+  --green: #2A7A55;
+  --green-tint: #E8F5EE;
+  --sand: #FAF8F5;
+  --white: #FFFFFF;
+  --ink: #1A1A1A;
+  --ink-2: #4A4A4A;
+  --ink-3: #8A8A8A;
+  --border: #E8E5E0;
+  --border-2: #D0CCC5;
+  --shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
+  --r: 10px;
+  --r-sm: 6px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 14px; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--sand);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── LAYOUT ─────────────────────────────────────────── */
+.shell {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 20px;
+  align-items: start;
+}
+.stack { display: flex; flex-direction: column; gap: 14px; }
+.row { display: flex; align-items: center; gap: 8px; }
+.row-end { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-top: 10px; }
+
+/* ─── TOPBAR ─────────────────────────────────────────── */
+.topbar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .875rem 0;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+}
+.brand-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: .01em;
+}
+.brand-sub {
+  font-size: 11px;
+  color: var(--ink-3);
+  margin-left: 2px;
+}
+.nav-steps { display: flex; align-items: center; gap: 5px; }
+.nstep {
+  font-size: 11px;
+  color: var(--ink-3);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all .15s;
+}
+.nstep.active {
+  color: var(--orange);
+  border-color: var(--orange);
+  background: var(--orange-tint);
+}
+.nstep.done { color: var(--ink-3); }
+
+/* ─── PAGE HERO ──────────────────────────────────────── */
+.hero {
+  padding: 3.5rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1rem;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: var(--orange);
+}
+.hero-h {
+  font-family: 'Lora', serif;
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: .875rem;
+}
+.hero-h em {
+  font-style: italic;
+  color: var(--orange);
+}
+.hero-body {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.75;
+  max-width: 460px;
+  margin-bottom: 1.5rem;
+}
+.hero-pills {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 1.75rem;
+}
+.hpill {
+  font-size: 11px;
+  padding: 4px 11px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--ink-3);
+}
+.hpill.o { background: var(--orange-tint); color: var(--orange); border-color: var(--orange); }
+.hpill.p { background: var(--pink-tint); color: var(--pink); border-color: var(--pink); }
+
+/* ─── CARDS ──────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 1.25rem 1.375rem;
+}
+.card-label {
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: .875rem;
+}
+.card-label i { font-size: 13px; }
+
+/* ─── SECTION WRAPPER ────────────────────────────────── */
+.section { padding: 1.5rem 0; }
+
+/* ─── EXAMINER ───────────────────────────────────────── */
+.ex-row { display: flex; gap: 10px; align-items: flex-start; }
+.avatar {
+  width: 32px; height: 32px; min-width: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--white);
+}
+.avatar i { font-size: 14px; color: var(--ink-3); }
+.bubble-wrap { flex: 1; }
+.bubble {
+  background: var(--sand);
+  border-radius: 0 var(--r) var(--r) var(--r);
+  padding: .625rem .875rem;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.65;
+}
+.bubble.lb {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  color: var(--orange);
+  font-size: 14px;
+}
+.bubble + .bubble { margin-top: 5px; }
+
+/* ─── TOPIC CARDS ────────────────────────────────────── */
+.topic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+}
+.tcard {
+  padding: .875rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  background: var(--white);
+}
+.tcard:hover { border-color: var(--border-2); }
+.tcard.sel {
+  border-color: var(--orange);
+  background: var(--orange-tint);
+}
+.tcard .em { font-size: 20px; margin-bottom: 4px; }
+.tcard .tn { font-size: 13px; font-weight: 500; color: var(--ink); }
+.tcard .ts { font-size: 11px; color: var(--ink-3); margin-top: 2px; }
+
+/* ─── RECORDER ───────────────────────────────────────── */
+.rec-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 1.5rem 0 1rem;
+}
+.wave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 32px;
+  width: 100%;
+}
+.wb {
+  width: 2px;
+  background: var(--border);
+  border-radius: 1px;
+  height: 4px;
+  transition: height .1s;
+}
+.wb.active { background: var(--orange); }
+.rtimer {
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+}
+.rtimer.rec-active { color: var(--orange); }
+.rec-btn {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s;
+  box-shadow: var(--shadow);
+}
+.rec-btn i { font-size: 22px; color: var(--ink); transition: color .15s; }
+.rec-btn:hover { border-color: var(--orange); }
+.rec-btn.recording {
+  background: var(--orange);
+  border-color: var(--orange);
+  animation: rpulse 1.6s ease-in-out infinite;
+}
+.rec-btn.recording i { color: #fff; }
+@keyframes rpulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(232,98,42,.3); }
+  50% { box-shadow: 0 0 0 12px rgba(232,98,42,0); }
+}
+.rec-status { font-size: 11px; color: var(--ink-3); }
+
+/* ─── TRANSCRIPT ─────────────────────────────────────── */
+.tbox {
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: .875rem;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.75;
+  background: var(--white);
+  margin-top: 10px;
+}
+.errhl {
+  border-bottom: 1.5px solid var(--pink);
+  color: var(--pink);
+  cursor: help;
+}
+
+/* ─── SCORES ─────────────────────────────────────────── */
+.score-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.scard {
+  background: var(--sand);
+  border-radius: var(--r-sm);
+  padding: .75rem;
+  text-align: center;
+}
+.scard .sv {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--ink-3);
+}
+.scard .sl {
+  font-size: 10px;
+  color: var(--ink-3);
+  margin-top: 2px;
+  letter-spacing: .04em;
+}
+.scard.g .sv { color: var(--green); }
+.scard.w .sv { color: var(--orange); }
+.scard.b .sv { color: var(--pink); }
+
+/* ─── BARS ───────────────────────────────────────────── */
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 5px 0;
+}
+.bar-lbl { font-size: 10px; color: var(--ink-3); width: 64px; flex-shrink: 0; }
+.bar-track {
+  flex: 1; height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width .5s ease;
+  width: 0%;
+}
+.bar-fill.o { background: var(--orange); }
+.bar-fill.p { background: var(--pink); }
+.bar-fill.g { background: var(--green); }
+.bar-val { font-size: 10px; color: var(--ink-3); min-width: 28px; text-align: right; }
+
+/* ─── ERRORS ─────────────────────────────────────────── */
+.err-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.eitem {
+  padding: .625rem .5rem;
+  border-bottom: 1px solid var(--border);
+}
+.eitem:last-child { border-bottom: none; }
+.eitem .et {
+  font-size: 9px;
+  color: var(--pink);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  font-weight: 500;
+}
+.eitem .es { font-size: 13px; color: var(--ink); margin-top: 2px; }
+.eitem .ec { font-size: 12px; color: var(--ink-3); margin-top: 1px; }
+.eitem .ec .corr { color: var(--green); font-weight: 500; }
+.eitem .eexp { font-size: 11px; color: var(--ink-3); margin-top: 3px; line-height: 1.5; }
+.lod-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  margin-top: 5px;
+  text-decoration: none;
+  transition: color .12s;
+}
+.lod-link:hover { color: var(--orange); }
+
+/* ─── LOD PANEL ──────────────────────────────────────── */
+.lod-panel {
+  border-top: 1px solid var(--border);
+  margin-top: 14px;
+  padding-top: 14px;
+}
+.lod-eyebrow {
+  font-size: 9px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+}
+.lod-word {
+  font-family: 'Lora', serif;
+  font-size: 20px;
+  color: var(--ink);
+}
+.lod-pos {
+  font-size: 11px;
+  color: var(--ink-3);
+  font-style: italic;
+  margin-left: 6px;
+}
+.lod-def {
+  font-size: 12px;
+  color: var(--ink-2);
+  line-height: 1.6;
+  margin: 6px 0 10px;
+}
+.conj-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+.cjc {
+  background: var(--sand);
+  border-radius: var(--r-sm);
+  padding: 5px 8px;
+}
+.cjc .pro { font-size: 9px; color: var(--ink-3); }
+.cjc .form { font-size: 12px; font-weight: 500; color: var(--ink); }
+
+/* ─── N-RULE ─────────────────────────────────────────── */
+.nrule-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.nrule-row:last-child { border: none; }
+.nr-env { color: var(--ink-3); flex: 1; font-size: 11px; }
+.nr-form { font-weight: 500; color: var(--ink); min-width: 90px; }
+.nr-ex { color: var(--ink-3); font-size: 10px; font-style: italic; }
+
+/* ─── PHOTOS ─────────────────────────────────────────── */
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 12px 0;
+}
+.ph-opt {
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  cursor: pointer;
+  aspect-ratio: 4/3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: var(--white);
+  transition: border-color .15s, background .15s;
+}
+.ph-opt:hover { border-color: var(--border-2); }
+.ph-opt.sel { border-color: var(--orange); background: var(--orange-tint); }
+.ph-opt i { font-size: 22px; color: var(--ink-3); }
+.ph-opt.sel i { color: var(--orange); }
+.ph-opt span { font-size: 10px; color: var(--ink-3); }
+
+/* ─── PHRASES ────────────────────────────────────────── */
+.phrase {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.phrase:last-child { border: none; }
+.phrase .lb { font-weight: 500; color: var(--ink); min-width: 170px; }
+.phrase .en { font-size: 11px; color: var(--ink-3); }
+
+/* ─── HV ─────────────────────────────────────────────── */
+.hv-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+.hvtab {
+  font-size: 12px;
+  padding: 7px 13px;
+  cursor: pointer;
+  color: var(--ink-3);
+  border-bottom: 1.5px solid transparent;
+  margin-bottom: -1px;
+  transition: all .12s;
+}
+.hvtab.on { color: var(--orange); border-bottom-color: var(--orange); }
+.hv-text {
+  background: var(--sand);
+  border-radius: var(--r-sm);
+  padding: .75rem .875rem;
+  font-size: 12px;
+  color: var(--ink-2);
+  line-height: 1.75;
+  font-style: italic;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+}
+.hv-play-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.play-btn {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all .12s;
+}
+.play-btn:hover { border-color: var(--orange); }
+.play-btn i { font-size: 14px; color: var(--ink); }
+.q-block {
+  padding: .625rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.q-block:last-child { border: none; }
+.q-text { font-size: 13px; color: var(--ink); margin-bottom: 7px; line-height: 1.5; }
+.q-opts { display: flex; flex-direction: column; gap: 4px; }
+.q-opt {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 8px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--ink-3);
+  transition: all .1s;
+}
+.q-opt:hover { background: var(--sand); }
+.q-opt.picked { border-color: var(--border); color: var(--ink); }
+.q-opt.correct { border-color: var(--green); color: var(--green); background: var(--green-tint); }
+.q-opt.wrong { color: var(--pink); text-decoration: line-through; }
+
+/* ─── RESULTS ────────────────────────────────────────── */
+.res-ring {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  border: 1.5px solid var(--border);
+}
+.res-ring.pass { border-color: var(--green); background: var(--green-tint); }
+.res-ring.fail { border-color: var(--orange); background: var(--orange-tint); }
+.res-pct { font-size: 22px; font-weight: 500; color: var(--ink); line-height: 1; }
+.res-ring.pass .res-pct { color: var(--green); }
+.res-ring.fail .res-pct { color: var(--orange); }
+.res-verdict {
+  font-family: 'Lora', serif;
+  font-size: 16px;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 4px;
+}
+.res-sub { font-size: 12px; color: var(--ink-3); text-align: center; }
+
+/* ─── BUTTONS ────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--ink);
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  transition: all .12s;
+  text-decoration: none;
+}
+.btn:hover { background: var(--sand); border-color: var(--border-2); }
+.btn.solid {
+  background: var(--orange);
+  color: #fff;
+  border-color: var(--orange);
+}
+.btn.solid:hover { background: #cf5422; border-color: #cf5422; }
+.btn.outline-pink { border-color: var(--pink); color: var(--pink); }
+.btn.outline-pink:hover { background: var(--pink-tint); }
+.btn:disabled { opacity: .35; cursor: not-allowed; }
+.btn-row { display: flex; gap: 7px; justify-content: flex-end; margin-top: 10px; }
+.btn-full { width: 100%; justify-content: center; }
+.btn-between { justify-content: space-between; }
+
+/* ─── THINKING ───────────────────────────────────────── */
+.thinking {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--ink-3);
+  padding: 8px 0;
+}
+.da { display: flex; gap: 3px; }
+.da span {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--orange);
+  animation: dab 1.2s ease-in-out infinite;
+  display: inline-block;
+}
+.da span:nth-child(2) { animation-delay: .2s; }
+.da span:nth-child(3) { animation-delay: .4s; }
+@keyframes dab {
+  0%,80%,100% { transform: scale(.6); opacity: .4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* ─── MISC ───────────────────────────────────────────── */
+.divider { height: 1px; background: var(--border); margin: 14px 0; }
+.tiny { font-size: 11px; color: var(--ink-3); }
+.label { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.hidden { display: none !important; }
+.text-orange { color: var(--orange); }
+.text-pink { color: var(--pink); }
+.text-green { color: var(--green); }
+
+/* ─── API KEY MODAL ──────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(4px);
+}
+.modal {
+  background: var(--white);
+  border-radius: var(--r);
+  padding: 2rem;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,.15);
+}
+.modal h2 {
+  font-family: 'Lora', serif;
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: .5rem;
+}
+.modal p { font-size: 13px; color: var(--ink-2); line-height: 1.65; margin-bottom: 1.25rem; }
+.modal input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: .625rem .875rem;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  margin-bottom: 10px;
+  background: var(--sand);
+}
+.modal input:focus { border-color: var(--orange); }
+.modal-note {
+  font-size: 10px;
+  color: var(--ink-3);
+  line-height: 1.6;
+  padding: .625rem .75rem;
+  background: var(--sand);
+  border-radius: var(--r-sm);
+  margin-bottom: 1rem;
+}
+.modal-note a { color: var(--orange); }
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .two-col { grid-template-columns: 1fr; }
+  .hero-h { font-size: 1.75rem; }
+  .nav-steps { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- API KEY MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h2>Enter your API key</h2>
+    <p>This app uses the Anthropic API to evaluate your Luxembourgish grammar in real time. Your key is stored only in your browser and never sent anywhere except <code>api.anthropic.com</code>.</p>
+    <input type="password" id="api-key-input" placeholder="sk-ant-..." />
+    <div class="modal-note">
+      Get a key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> → API Keys. Free tier available. Your key stays local — this app has no backend.
+    </div>
+    <button class="btn solid btn-full" onclick="saveKey()"><i class="ti ti-check"></i> Save and continue</button>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="shell">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark"></div>
+        <span class="brand-name">Sproochentest</span>
+        <span class="brand-sub">Practice</span>
+      </div>
+      <div class="nav-steps">
+        <span class="nstep active" id="np-1" onclick="navTo('speaking')">Speaking</span>
+        <span style="font-size:10px;color:var(--border-2)">·</span>
+        <span class="nstep" id="np-2" onclick="navTo('photo')">Photo</span>
+        <span style="font-size:10px;color:var(--border-2)">·</span>
+        <span class="nstep" id="np-3" onclick="navTo('listening')">Listening</span>
+        <span style="font-size:10px;color:var(--border-2)">·</span>
+        <span class="nstep" id="np-4" onclick="navTo('results')">Results</span>
+      </div>
+      <button class="btn" onclick="changeKey()" style="font-size:10px;padding:4px 10px"><i class="ti ti-key"></i> API key</button>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+
+<!-- ── WELCOME ──────────────────────────────────────────── -->
+<div id="sc-welcome">
+  <div class="hero">
+    <div class="hero-eyebrow">INLL · Luxembourg · A2 / B1</div>
+    <div class="hero-h">Practice for the<br><em>Sproochentest</em></div>
+    <div class="hero-body">Three parts. Real examiner questions in Luxembourgish. Grammar errors detected and linked to the LOD dictionary. Everything focused on helping you pass — nothing extra.</div>
+    <div class="hero-pills">
+      <span class="hpill o">Speaking A2</span>
+      <span class="hpill o">Photo description A2</span>
+      <span class="hpill p">Listening comprehension B1</span>
+      <span class="hpill">LOD dictionary</span>
+      <span class="hpill">N-rule reference</span>
+    </div>
+    <button class="btn solid" onclick="go('speaking')" style="padding:9px 22px;font-size:13px">
+      <i class="ti ti-arrow-right"></i> Begin practice test
+    </button>
+  </div>
+  <div class="section">
+    <div class="label" style="margin-bottom:12px">What to expect</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+      <div class="card">
+        <div style="font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Part 1 · A2</div>
+        <div style="font-size:14px;font-weight:500;margin-bottom:4px">Speaking</div>
+        <div class="tiny" style="line-height:1.65">Choose a topic. Answer 3 examiner questions. Grammar analysed in real time.</div>
+        <div style="margin-top:10px;font-size:10px;color:var(--ink-3)">≈ 15 min</div>
+      </div>
+      <div class="card">
+        <div style="font-size:10px;color:var(--orange);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Part 2 · A2</div>
+        <div style="font-size:14px;font-weight:500;margin-bottom:4px">Photo</div>
+        <div class="tiny" style="line-height:1.65">Choose and describe one of three photos. Focus on vocabulary and sentence structure.</div>
+        <div style="margin-top:10px;font-size:10px;color:var(--ink-3)">≈ 5 min</div>
+      </div>
+      <div class="card">
+        <div style="font-size:10px;color:var(--pink);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Part 3 · B1</div>
+        <div style="font-size:14px;font-weight:500;margin-bottom:4px">Listening</div>
+        <div class="tiny" style="line-height:1.65">Three texts: radio, conversation, presentation. Multiple-choice questions.</div>
+        <div style="margin-top:10px;font-size:10px;color:var(--ink-3)">≈ 35 min</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SPEAKING ──────────────────────────────────────────── -->
+<div id="sc-speaking" class="hidden">
+  <div class="section">
+    <div class="two-col">
+      <div class="stack">
+        <div class="card">
+          <div class="card-label"><i class="ti ti-microphone"></i> Part 1 — Speaking interview · A2</div>
+          <div class="ex-row">
+            <div class="avatar"><i class="ti ti-user"></i></div>
+            <div class="bubble-wrap">
+              <div class="bubble lb" id="ex-lb">Gudde Moien! Kënnt dir iech kuerz virstellen a wielt dann ee vun dësen zwee Themen?</div>
+              <div class="bubble" id="ex-en">Good morning! Please briefly introduce yourself, then choose one of these two topics to discuss.</div>
+            </div>
+          </div>
+          <div id="topic-area" style="margin-top:4px">
+            <div class="tiny" style="margin-bottom:4px">Choose one topic:</div>
+            <div class="topic-grid" id="topic-grid"></div>
+            <div class="btn-row">
+              <button class="btn solid" id="btn-confirm" onclick="confirmTopic()" disabled>
+                <i class="ti ti-check"></i> Confirm topic
+              </button>
+            </div>
+          </div>
+          <div id="q-area" class="hidden">
+            <div id="q-display"></div>
+            <div class="btn-row">
+              <button class="btn" id="btn-nq" onclick="nextQ()">
+                <i class="ti ti-arrow-right"></i> <span id="nq-lbl">Next question</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-label"><i class="ti ti-microphone-2"></i> Your answer</div>
+          <div class="rec-area">
+            <div class="wave" id="wv1"></div>
+            <div class="rtimer" id="t1">0:00</div>
+            <button class="rec-btn" id="rb1" onclick="toggleRec(1)">
+              <i class="ti ti-microphone" id="ri1"></i>
+            </button>
+            <div class="rec-status" id="rs1">Tap to record your answer</div>
+            <div style="display:flex;gap:7px;margin-top:4px">
+              <button class="btn outline-pink" id="bd1" onclick="discard(1)" style="display:none"><i class="ti ti-trash"></i> Discard</button>
+              <button class="btn solid" id="ba1" onclick="analyze(1)" style="display:none"><i class="ti ti-sparkles"></i> Analyze answer</button>
+            </div>
+          </div>
+          <div id="tr1" class="hidden">
+            <div class="tiny" style="margin-bottom:5px">Transcript (simulated for demo)</div>
+            <div class="tbox" id="txt1"></div>
+            <div class="thinking hidden" id="th1">
+              <div class="da"><span></span><span></span><span></span></div>
+              <span>Examiner is evaluating your answer…</span>
+            </div>
+          </div>
+          <div id="lod1" class="hidden lod-panel">
+            <div class="lod-eyebrow">LOD — Lëtzebuerger Online Dictionnaire</div>
+            <div id="lod1-content"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="stack">
+        <div class="card">
+          <div class="card-label"><i class="ti ti-chart-bar"></i> Scores</div>
+          <div class="score-grid" id="sg1">
+            <div class="scard"><div class="sv">—</div><div class="sl">Grammar</div></div>
+            <div class="scard"><div class="sv">—</div><div class="sl">Fluency</div></div>
+            <div class="scard"><div class="sv">—</div><div class="sl">Vocabulary</div></div>
+            <div class="scard"><div class="sv">—</div><div class="sl">Interaction</div></div>
+          </div>
+          <div style="margin-top:10px">
+            <div class="bar-row"><span class="bar-lbl">Overall</span><div class="bar-track"><div class="bar-fill g" id="ov-bar"></div></div><span class="bar-val" id="ov-val">—</span></div>
+            <div class="bar-row"><span class="bar-lbl">Grammar</span><div class="bar-track"><div class="bar-fill o" id="gr-bar"></div></div><span class="bar-val" id="gr-val">—</span></div>
+            <div class="bar-row"><span class="bar-lbl">Fluency</span><div class="bar-track"><div class="bar-fill p" id="fl-bar"></div></div><span class="bar-val" id="fl-val">—</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label"><i class="ti ti-alert-circle"></i> Grammar errors</div>
+          <div class="err-list" id="el1">
+            <div class="tiny" style="padding:.5rem 0">No errors yet — start speaking</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label"><i class="ti ti-info-circle"></i> N-rule reference</div>
+          <div>
+            <div class="nrule-row"><span class="nr-env">After vowel sound</span><span class="nr-form">keen-en</span><span class="nr-ex">e keen-en Hond</span></div>
+            <div class="nrule-row"><span class="nr-env">Dative masc/neuter</span><span class="nr-form">dem Manne</span><span class="nr-ex">mat dem Manne</span></div>
+            <div class="nrule-row"><span class="nr-env">Plural in dative</span><span class="nr-form">Kannern</span><span class="nr-ex">mat de Kannern</span></div>
+            <div class="nrule-row"><span class="nr-env">After der (adj)</span><span class="nr-form">-e or -en</span><span class="nr-ex">de klenge Mann</span></div>
+          </div>
+          <a href="https://spellchecker.lu" target="_blank" class="btn" style="margin-top:10px;width:100%;justify-content:center;font-size:11px">
+            <i class="ti ti-external-link"></i> Check at spellchecker.lu
+          </a>
+        </div>
+        <button class="btn" onclick="go('photo')" style="justify-content:center">Skip to photo description →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PHOTO ─────────────────────────────────────────────── -->
+<div id="sc-photo" class="hidden">
+  <div class="section">
+    <div class="two-col">
+      <div class="stack">
+        <div class="card">
+          <div class="card-label"><i class="ti ti-photo"></i> Part 2 — Photo description · A2</div>
+          <div class="ex-row">
+            <div class="avatar"><i class="ti ti-user"></i></div>
+            <div class="bubble-wrap">
+              <div class="bubble lb">Kuck dir w.e.g. dräi Fotoen un a wielt eng fir ze beschreiwen.</div>
+              <div class="bubble">Please look at three photos and choose one to describe in detail.</div>
+            </div>
+          </div>
+          <div class="photo-grid" id="ph-grid"></div>
+          <div id="ph-q" class="hidden">
+            <div class="ex-row">
+              <div class="avatar"><i class="ti ti-user"></i></div>
+              <div class="bubble-wrap">
+                <div class="bubble lb" id="ph-q-lb"></div>
+                <div class="bubble" id="ph-q-en"></div>
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn solid" id="btn-ph" onclick="startPhoto()" disabled>
+              <i class="ti ti-microphone"></i> Start describing
+            </button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label"><i class="ti ti-microphone-2"></i> Your description</div>
+          <div class="rec-area">
+            <div class="wave" id="wv2"></div>
+            <div class="rtimer" id="t2">0:00</div>
+            <button class="rec-btn" id="rb2" onclick="toggleRec(2)">
+              <i class="ti ti-microphone" id="ri2"></i>
+            </button>
+            <div class="rec-status" id="rs2">Choose a photo first</div>
+            <div style="display:flex;gap:7px;margin-top:4px">
+              <button class="btn outline-pink" id="bd2" onclick="discard(2)" style="display:none"><i class="ti ti-trash"></i> Discard</button>
+              <button class="btn solid" id="ba2" onclick="analyze(2)" style="display:none"><i class="ti ti-sparkles"></i> Analyze</button>
+            </div>
+          </div>
+          <div id="tr2" class="hidden">
+            <div class="tbox" id="txt2"></div>
+            <div class="thinking hidden" id="th2">
+              <div class="da"><span></span><span></span><span></span></div>
+              <span>Evaluating description…</span>
+            </div>
+          </div>
+          <div id="lod2" class="hidden lod-panel">
+            <div class="lod-eyebrow">LOD — Lëtzebuerger Online Dictionnaire</div>
+            <div id="lod2-content"></div>
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <div class="card-label"><i class="ti ti-chart-bar"></i> Scores</div>
+          <div class="score-grid">
+            <div class="scard" id="d-det"><div class="sv">—</div><div class="sl">Detail</div></div>
+            <div class="scard" id="d-voc"><div class="sv">—</div><div class="sl">Vocabulary</div></div>
+            <div class="scard" id="d-grm"><div class="sv">—</div><div class="sl">Grammar</div></div>
+            <div class="scard" id="d-coh"><div class="sv">—</div><div class="sl">Coherence</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label"><i class="ti ti-alert-circle"></i> Errors</div>
+          <div class="err-list" id="el2">
+            <div class="tiny" style="padding:.5rem 0">Describe a photo to see feedback</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label"><i class="ti ti-eye"></i> Useful phrases</div>
+          <div>
+            <div class="phrase"><span class="lb">Op dësem Bild gesinn ech…</span><span class="en">In this picture I see…</span></div>
+            <div class="phrase"><span class="lb">Am Virgronnd / Hannergrond</span><span class="en">Foreground / background</span></div>
+            <div class="phrase"><span class="lb">Et schéngt wéi wann…</span><span class="en">It looks as if…</span></div>
+            <div class="phrase"><span class="lb">Wahrscheinlech ass…</span><span class="en">It is probably…</span></div>
+            <div class="phrase"><span class="lb">Ech weess net genee, mä…</span><span class="en">I'm not sure, but…</span></div>
+          </div>
+        </div>
+        <button class="btn" onclick="go('listening')" style="justify-content:center">Skip to listening →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── LISTENING ─────────────────────────────────────────── -->
+<div id="sc-listening" class="hidden">
+  <div class="section">
+    <div class="two-col">
+      <div class="stack">
+        <div class="card">
+          <div class="card-label"><i class="ti ti-headphones"></i> Part 3 — Listening · B1</div>
+          <div class="ex-row" style="margin-bottom:14px">
+            <div class="avatar"><i class="ti ti-user"></i></div>
+            <div class="bubble-wrap">
+              <div class="bubble lb">Lauschtert un dräi Texter a beäntwert d'Froen.</div>
+              <div class="bubble">Listen to three texts and answer the comprehension questions. 35 minutes.</div>
+            </div>
+          </div>
+          <div class="hv-tabs">
+            <span class="hvtab on" onclick="hvTab(0,this)"><i class="ti ti-radio" style="font-size:12px;vertical-align:-2px"></i> Radio</span>
+            <span class="hvtab" onclick="hvTab(1,this)"><i class="ti ti-messages" style="font-size:12px;vertical-align:-2px"></i> Conversation</span>
+            <span class="hvtab" onclick="hvTab(2,this)"><i class="ti ti-presentation" style="font-size:12px;vertical-align:-2px"></i> Presentation</span>
+          </div>
+          <div id="hv-body"></div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <div class="card-label"><i class="ti ti-chart-pie"></i> Score</div>
+          <div class="scard" style="text-align:center;padding:1rem">
+            <div class="sv" id="hv-val">—</div>
+            <div class="sl">Correct answers</div>
+          </div>
+          <div style="margin-top:8px">
+            <div class="bar-row">
+              <span class="bar-lbl">Accuracy</span>
+              <div class="bar-track"><div class="bar-fill p" id="hv-bar"></div></div>
+              <span class="bar-val" id="hv-lbl">—</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label"><i class="ti ti-books"></i> Resources</div>
+          <div class="stack" style="gap:6px">
+            <a href="https://www.rtl.lu/" target="_blank" class="btn btn-full btn-between">
+              <span><i class="ti ti-broadcast"></i> RTL Lëtzebuerg</span>
+              <span class="tiny">Daily radio</span>
+            </a>
+            <a href="https://www.inll.lu/en/poterkescht-the-podcast-in-luxembourgish-from-inll/" target="_blank" class="btn btn-full btn-between">
+              <span><i class="ti ti-player-play"></i> Poterkëscht</span>
+              <span class="tiny">INLL podcast</span>
+            </a>
+            <a href="https://sdl.inll.lu/book-b1-2020-2021/" target="_blank" class="btn btn-full btn-between">
+              <span><i class="ti ti-headphones"></i> B1 audios</span>
+              <span class="tiny">sdl.inll.lu</span>
+            </a>
+          </div>
+        </div>
+        <button class="btn solid btn-full" onclick="go('results')">
+          <i class="ti ti-flag-check"></i> Finish & see results
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── RESULTS ───────────────────────────────────────────── -->
+<div id="sc-results" class="hidden">
+  <div class="section">
+    <div class="two-col">
+      <div class="stack">
+        <div class="card" style="text-align:center;padding:2rem 1.5rem">
+          <div class="res-ring" id="res-ring">
+            <div class="res-pct" id="res-pct">—</div>
+          </div>
+          <div class="res-verdict" id="res-verdict"></div>
+          <div class="res-sub" id="res-sub"></div>
+        </div>
+        <div class="card">
+          <div class="card-label"><i class="ti ti-chart-bar"></i> Score breakdown</div>
+          <div id="breakdown-scores"></div>
+        </div>
+        <div class="card">
+          <div class="card-label"><i class="ti ti-alert-circle"></i> All grammar errors</div>
+          <div class="err-list" id="all-err">
+            <div class="tiny" style="padding:.5rem 0">No errors recorded yet</div>
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <div class="card-label"><i class="ti ti-map"></i> Next steps</div>
+          <div class="stack" style="gap:6px" id="next-steps"></div>
+        </div>
+        <div class="divider"></div>
+        <button class="btn solid btn-full" onclick="restartTest()">
+          <i class="ti ti-refresh"></i> Practice again
+        </button>
+        <a href="https://lod.lu" target="_blank" class="btn btn-full" style="justify-content:center">
+          <i class="ti ti-book-2"></i> Open LOD dictionary
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /shell -->
+
+<script>
+/* ── DATA ─────────────────────────────────────────────── */
+const TOPICS = [
+  {em:'🏠',name:"D'Wunneng",sub:'Home & living',
+   lb:'Wou wunnt dir? Beschreift är Wunneng an är Nopeschschaft.',
+   en:'Where do you live? Describe your home and neighbourhood.',
+   qs:[
+    {lb:"Wéi ass är Wunneng? Wéi vill Raim huet sie?",en:"What is your apartment like? How many rooms does it have?"},
+    {lb:"Wéi laang wunnt dir schonn do? Gëfft iech dat?",en:"How long have you lived there? Do you like it?"},
+    {lb:"Wat mécht dir gären an ärer Nopeschschaft?",en:"What do you like doing in your neighbourhood?"}
+   ]},
+  {em:'👨‍👩‍👧',name:"D'Famill",sub:'Family',
+   lb:'Erzielt mir vun ärer Famill. Mat wie wunnt dir?',
+   en:'Tell me about your family. Who do you live with?',
+   qs:[
+    {lb:"Hutt dir Kanner oder Geschwëster? Beschreift eng Persoun.",en:"Do you have children or siblings? Describe one person."},
+    {lb:"Wat mécht är Famill gären an der Fräizäit?",en:"What does your family like doing in their free time?"},
+    {lb:"Wéini gesitt dir äre Familljememberen?",en:"When do you see your family members?"}
+   ]},
+  {em:'💼',name:"D'Aarbecht",sub:'Work & career',
+   lb:'Wat ass är Beruff? Erzielt mir vun ärer Aarbecht.',
+   en:'What is your job? Tell me about your work.',
+   qs:[
+    {lb:"Wou schaffen dir a wat sinn är Haaptopgaben?",en:"Where do you work and what are your main tasks?"},
+    {lb:"Gëfft iech är Aarbecht? Firwat oder firwat net?",en:"Do you enjoy your work? Why or why not?"},
+    {lb:"Wéi kënnt dir op d'Aarbecht? Wéi laang dauert dat?",en:"How do you get to work? How long does it take?"}
+   ]},
+  {em:'⚽',name:"D'Fräizäit",sub:'Hobbies & leisure',
+   lb:'Wat mécht dir gären an ärer Fräizäit?',
+   en:'What do you like doing in your free time?',
+   qs:[
+    {lb:"Wat sinn är Hobbyen? Zënter wéini?",en:"What are your hobbies? Since when?"},
+    {lb:"Maacht dir Sport oder hutt dir kulturell Interessien?",en:"Do you do sport or have cultural interests?"},
+    {lb:"Wéi oft mécht dir dat a mat wien?",en:"How often do you do that and with whom?"}
+   ]}
+];
+
+const PHOTOS = [
+  {name:'Market scene',icon:'ti-building-community',
+   lb:'Beschreift dëst Bild. Wat gesitt dir? Wou ass dat? Wat geschitt do?',
+   en:'Describe this picture. What do you see? Where is it? What is happening?'},
+  {name:'Family gathering',icon:'ti-friends',
+   lb:'Beschreift dëst Bild. Wat geschitt do? Wéi schéngen d\'Leit ze sinn?',
+   en:"Describe this picture. What's happening? How do the people seem?"},
+  {name:'Park / nature',icon:'ti-trees',
+   lb:'Beschreift dëst Bild. Wat fënnt dir interressant doran?',
+   en:'Describe this picture. What do you find interesting about it?'}
+];
+
+const HV = [
+  {t:'Radio message',
+   text:"Gudde Moien, léif Nolauschterer! D'Wieder vun haut: Et ass sonneg mam liichten Nordwand. D'Temperaturen erreechen 22 Grad. Op der Autobunn A1 gëtt et Embouteillage wéinst Baustell. Mir recommandéieren d'Nationalstrooss ze huelen. Moien Owend gëtt et Reen.",
+   qs:[
+    {q:"What is the weather like today?",os:["Rainy and cold","Sunny with light wind","Cloudy and warm","Foggy"],a:1},
+    {q:"Where is there a traffic jam?",os:["Luxembourg City","Highway A1","National road","Train station"],a:1},
+    {q:"What is expected this evening?",os:["Strong storms","Snow","Rain","Sunshine"],a:2}
+   ]},
+  {t:'Conversation',
+   text:"Marie: Hee Paul, wou gees du haut mëttes iessen? Paul: Ech weess nach net. Vläicht an d'Kantin oder an de Park mat Sandwichen. Marie: D'Kantin ass haut zou wéinst Renovatiounsaarbechten. Paul: Ah, dat weess ech net. Da goe mir zesummen an de Park! Marie: Super! Ech bréngen Sandwichen mat, du hëlls d'Gedrénks. Paul: Abgemach! Mir treffe meis um 12h30.",
+   qs:[
+    {q:"Why is the canteen closed?",os:["Public holiday","Renovation works","Too crowded","End of month"],a:1},
+    {q:"Where will they eat?",os:["A restaurant","The office","The park","The canteen"],a:2},
+    {q:"What time will they meet?",os:["12:00","12:15","12:30","13:00"],a:2}
+   ]},
+  {t:'Presentation',
+   text:"Gudde Moien! Ech wëll iech haut iwwer d'Méiglechkeeten erziele fir Lëtzebuergesch ze léieren. Den INLL bitt Coursen fir all Niveauen un. D'Coursen daueren tëscht 3 an 9 Méint. Et ginn och Online-Coursen fir Leit déi net reegelméisseg kënne kommen. Fir d'Nationalitéit unzefroen, musst dir de Sproochentest machen. De Test ass an zwee Deeler: e Spriechen an e Lauschterverständnis.",
+   qs:[
+    {q:"Who offers Luxembourgish courses?",os:["University of Luxembourg","INLL","Municipal schools","Private companies"],a:1},
+    {q:"How long do the courses last?",os:["1–3 months","2–6 months","3–9 months","6–12 months"],a:2},
+    {q:"What is required to apply for nationality?",os:["Speaking test only","Listening test only","Both speaking and listening","A written exam"],a:2}
+   ]}
+];
+
+const SAMPLE_ANSWERS = [
+  "Ech wunnen an enger 3-Zëmmer-Wunneng zu Lëtzebuerg-Stad. D'Wunneng ass ganz schéin an hell. Ech hunn do ee Schlofzëmmer, ee Lieszëmmer an eng Kichen. D'Nopeschschaft ass roueg an ech wunnen do gär zënter dräi Joer.",
+  "Meng Famill ass net ze grouss. Ech hu zwee Kanner, ee Bouf an ee Meedchen. Si sinn nach kleng. Mir ginn oft an de Park oder spillen Gesellschaftsspiller zesummen.",
+  "Ech schaffe gär meng Aarbecht well et variéiert ass. Ech kommen mat dem Bus op d'Aarbecht, dat dauert ongeféier zwanzeg Minutten.",
+  "An menger Fräizäit spillen ech gären Tennis. Zënter fënnef Joer spille mech dëse Sport. Ech ginn zwee Mol pro Woch op den Terrain mat menge Frënn."
+];
+const SAMPLE_DESCS = [
+  "Op dësem Bild gesinn ech ee Maart. Et ginn vill Leit déi do aikafe ginn. D'Wieder ass sonneg a hell. Ech gesinn verschiddene Stänn mat Geméis a Friichten. Et ass wahrscheinlech e Samschdeg Moien.",
+  "Ech gesinn eng Famill op dësem Bild. D'Elteren sinn mat hire Kanner. Si schéngen glécklich ze sinn a si lachet. Si sinn wahrscheinlech bei enger Gebuertstogsfeier."
+];
+
+/* ── STATE ───────────────────────────────────────────── */
+let S = {
+  apiKey: '', topicOpts: [], selTopic: null, curQ: 0,
+  rec: {1:false, 2:false}, secs: {1:0, 2:0},
+  timers: {1:null, 2:null}, wints: {1:null, 2:null},
+  sc: {gr:0,fl:0,vo:0,inn:0,det:0,coh:0,hv:0},
+  errs: [], calls: 0, selPhoto: null, hvTab: 0, hvAns: {}
+};
+
+/* ── API KEY ─────────────────────────────────────────── */
+function saveKey() {
+  const k = document.getElementById('api-key-input').value.trim();
+  if (!k.startsWith('sk-')) { alert('Please enter a valid Anthropic API key starting with sk-'); return; }
+  S.apiKey = k;
+  localStorage.setItem('sproochentest_key', k);
+  document.getElementById('modal').style.display = 'none';
+}
+function changeKey() {
+  document.getElementById('api-key-input').value = S.apiKey || '';
+  document.getElementById('modal').style.display = 'flex';
+}
+window.onload = () => {
+  const saved = localStorage.getItem('sproochentest_key');
+  if (saved) { S.apiKey = saved; document.getElementById('modal').style.display = 'none'; }
+  initWave('wv1', 18); initWave('wv2', 18);
+  renderHV();
+};
+
+/* ── NAVIGATION ──────────────────────────────────────── */
+const SCREENS = ['welcome','speaking','photo','listening','results'];
+function go(ph) {
+  SCREENS.forEach(s => {
+    const el = document.getElementById('sc-'+s);
+    if (el) el.classList.add('hidden');
+  });
+  document.getElementById('sc-'+ph).classList.remove('hidden');
+  updateNav(ph);
+  if (ph === 'speaking') initSpeaking();
+  if (ph === 'photo') initPhoto();
+  if (ph === 'results') renderResults();
+  window.scrollTo(0, 0);
+}
+function navTo(ph) { go(ph); }
+function updateNav(ph) {
+  const map = {speaking:1, photo:2, listening:3, results:4};
+  const cur = map[ph] || 0;
+  [1,2,3,4].forEach(n => {
+    const el = document.getElementById('np-'+n);
+    el.className = 'nstep' + (n === cur ? ' active' : n < cur ? ' done' : '');
+  });
+}
+
+/* ── SPEAKING ────────────────────────────────────────── */
+function initSpeaking() {
+  const t0 = TOPICS[Math.floor(Math.random()*2)];
+  const t1 = TOPICS[2+Math.floor(Math.random()*2)];
+  S.topicOpts = [t0, t1];
+  const g = document.getElementById('topic-grid');
+  g.innerHTML = '';
+  S.topicOpts.forEach((t,i) => {
+    g.innerHTML += `<div class="tcard" id="tc${i}" onclick="selTopic(${i})">
+      <div class="em">${t.em}</div>
+      <div class="tn">${t.name}</div>
+      <div class="ts">${t.sub}</div>
+    </div>`;
+  });
+  document.getElementById('topic-area').classList.remove('hidden');
+  document.getElementById('q-area').classList.add('hidden');
+  document.getElementById('btn-confirm').disabled = true;
+  S.selTopic = null; S.curQ = 0;
+}
+function selTopic(i) {
+  S.selTopic = i;
+  document.querySelectorAll('.tcard').forEach((c,j) => c.className = 'tcard'+(j===i?' sel':''));
+  document.getElementById('btn-confirm').disabled = false;
+}
+function confirmTopic() {
+  document.getElementById('topic-area').classList.add('hidden');
+  document.getElementById('q-area').classList.remove('hidden');
+  S.curQ = 0; showQ();
+}
+function showQ() {
+  const t = S.topicOpts[S.selTopic], q = t.qs[S.curQ];
+  document.getElementById('q-display').innerHTML = `
+    <div class="ex-row" style="margin-top:10px">
+      <div class="avatar"><i class="ti ti-user"></i></div>
+      <div class="bubble-wrap">
+        <div class="bubble lb">${q.lb}</div>
+        <div class="bubble">${q.en}</div>
+      </div>
+    </div>`;
+  const isLast = S.curQ >= t.qs.length - 1;
+  document.getElementById('nq-lbl').textContent = isLast ? 'Go to photo description' : 'Next question';
+  document.getElementById('bd1').style.display = 'none';
+  document.getElementById('ba1').style.display = 'none';
+  document.getElementById('tr1').classList.add('hidden');
+  document.getElementById('lod1').classList.add('hidden');
+}
+function nextQ() {
+  const t = S.topicOpts[S.selTopic];
+  if (S.curQ < t.qs.length - 1) { S.curQ++; showQ(); }
+  else go('photo');
+}
+
+/* ── PHOTO ───────────────────────────────────────────── */
+function initPhoto() {
+  const g = document.getElementById('ph-grid'); g.innerHTML = '';
+  PHOTOS.forEach((p,i) => {
+    g.innerHTML += `<div class="ph-opt" id="ph${i}" onclick="selPhoto(${i})">
+      <i class="ti ${p.icon}"></i><span>${p.name}</span>
+    </div>`;
+  });
+  document.getElementById('btn-ph').disabled = true;
+  document.getElementById('ph-q').classList.add('hidden');
+  document.getElementById('rs2').textContent = 'Choose a photo first';
+  S.selPhoto = null;
+}
+function selPhoto(i) {
+  S.selPhoto = i;
+  document.querySelectorAll('.ph-opt').forEach((p,j) => p.className = 'ph-opt'+(j===i?' sel':''));
+  const p = PHOTOS[i];
+  document.getElementById('ph-q-lb').textContent = p.lb;
+  document.getElementById('ph-q-en').textContent = p.en;
+  document.getElementById('ph-q').classList.remove('hidden');
+  document.getElementById('btn-ph').disabled = false;
+  document.getElementById('rs2').textContent = 'Tap to record your description';
+}
+function startPhoto() { document.getElementById('btn-ph').disabled = true; }
+
+/* ── RECORDER ────────────────────────────────────────── */
+function initWave(id, n) {
+  const c = document.getElementById(id); if (!c) return;
+  c.innerHTML = '';
+  for (let i = 0; i < n; i++) { const b = document.createElement('div'); b.className = 'wb'; c.appendChild(b); }
+}
+function animWave(id) {
+  const bs = document.getElementById(id).children;
+  for (let b of bs) { b.className = 'wb active'; b.style.height = (3+Math.random()*22)+'px'; }
+}
+function flatWave(id) {
+  const bs = document.getElementById(id).children;
+  for (let b of bs) { b.className = 'wb'; b.style.height = '4px'; }
+}
+function toggleRec(s) { S.rec[s] ? stopRec(s) : startRec(s); }
+function startRec(s) {
+  S.rec[s] = true; S.secs[s] = 0;
+  document.getElementById('rb'+s).classList.add('recording');
+  document.getElementById('ri'+s).className = 'ti ti-player-stop';
+  document.getElementById('rs'+s).textContent = 'Recording — tap to stop';
+  document.getElementById('t'+s).classList.add('rec-active');
+  document.getElementById('bd'+s).style.display = 'none';
+  document.getElementById('ba'+s).style.display = 'none';
+  S.timers[s] = setInterval(() => {
+    S.secs[s]++;
+    const m = Math.floor(S.secs[s]/60), sec = S.secs[s]%60;
+    document.getElementById('t'+s).textContent = m+':'+(sec<10?'0':'')+sec;
+  }, 1000);
+  S.wints[s] = setInterval(() => animWave('wv'+s), 130);
+}
+function stopRec(s) {
+  S.rec[s] = false;
+  clearInterval(S.timers[s]); clearInterval(S.wints[s]);
+  document.getElementById('rb'+s).classList.remove('recording');
+  document.getElementById('ri'+s).className = 'ti ti-microphone';
+  document.getElementById('rs'+s).textContent = 'Stopped — analyze or discard';
+  document.getElementById('t'+s).classList.remove('rec-active');
+  document.getElementById('bd'+s).style.display = 'flex';
+  document.getElementById('ba'+s).style.display = 'flex';
+  flatWave('wv'+s);
+}
+function discard(s) {
+  S.secs[s] = 0;
+  document.getElementById('t'+s).textContent = '0:00';
+  document.getElementById('rs'+s).textContent = s===1 ? 'Tap to record your answer' : 'Tap to record your description';
+  document.getElementById('bd'+s).style.display = 'none';
+  document.getElementById('ba'+s).style.display = 'none';
+  document.getElementById('tr'+s).classList.add('hidden');
+  document.getElementById('lod'+s).classList.add('hidden');
+  flatWave('wv'+s);
+}
+
+/* ── ANALYZE ─────────────────────────────────────────── */
+async function analyze(s) {
+  if (!S.apiKey) { changeKey(); return; }
+  document.getElementById('ba'+s).disabled = true;
+  const isPhoto = s === 2;
+  const transcript = isPhoto
+    ? SAMPLE_DESCS[Math.floor(Math.random()*SAMPLE_DESCS.length)]
+    : SAMPLE_ANSWERS[Math.floor(Math.random()*SAMPLE_ANSWERS.length)];
+  const t = !isPhoto ? S.topicOpts[S.selTopic] : null;
+  const q = !isPhoto ? t.qs[S.curQ] : null;
+  const ctx = isPhoto
+    ? `Photo description task. Photo type: "${PHOTOS[S.selPhoto||0].name}".`
+    : `Speaking interview. Question (LB): "${q.lb}". Topic: ${t.name}.`;
+
+  document.getElementById('tr'+s).classList.remove('hidden');
+  document.getElementById('txt'+s).textContent = transcript;
+  document.getElementById('th'+s).classList.remove('hidden');
+
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': S.apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1200,
+        system: `You are an INLL Sproochentest examiner evaluating Luxembourgish A2 student speech. Find grammar errors: verb conjugation (especially 1st/3rd person), modal verbs, article gender (den/d'/dem/der), N-rule violations, word order (verb-second rule), adjective endings. Return ONLY valid JSON, no markdown:\n{"grammar":N,"fluency":N,"vocabulary":N,"interaction":N,"detail":N,"coherence":N,"errors":[{"type":"Conjugation error","said":"wrong form","correction":"correct form","explanation":"brief why","lod_url":"https://lod.lu/article/WORD"}],"transcript_html":"transcript with <span class=\\"errhl\\" title=\\"Correction: FORM\\">wrong</span> on each error","key_lod":{"word":"most useful word","pos":"verb/noun/adj","def_en":"one-line English definition","conjugation":{"ech":"","du":"","hien/hatt":"","mir":"","dir":"","si":""}}}`,
+        messages: [{ role: 'user', content: `${ctx}\nStudent answer: "${transcript}"\nDuration: ${S.secs[s]}s. Identify 2-4 realistic A2-level errors.` }]
+      })
+    });
+    const data = await resp.json();
+    const txt = data.content.filter(c => c.type==='text').map(c => c.text).join('');
+    const r = JSON.parse(txt.replace(/```json|```/g,'').trim());
+
+    document.getElementById('th'+s).classList.add('hidden');
+    document.getElementById('txt'+s).innerHTML = r.transcript_html || transcript;
+
+    if (s === 1) {
+      setScoreGrid('sg1', ['Grammar','Fluency','Vocabulary','Interaction'], [r.grammar,r.fluency,r.vocabulary,r.interaction]);
+      const ov = Math.round((r.grammar+r.fluency+r.vocabulary+r.interaction)/4);
+      setBar('ov-bar','ov-val', ov*10, ov+'/10');
+      setBar('gr-bar','gr-val', r.grammar*10, r.grammar+'/10');
+      setBar('fl-bar','fl-val', r.fluency*10, r.fluency+'/10');
+      S.sc.gr += r.grammar; S.sc.fl += r.fluency; S.sc.vo += r.vocabulary; S.sc.inn += r.interaction;
+      S.calls++;
+    } else {
+      setMetric('d-det', r.detail||7); setMetric('d-voc', r.vocabulary||7);
+      setMetric('d-grm', r.grammar||7); setMetric('d-coh', r.coherence||7);
+      S.sc.det = r.detail||7; S.sc.coh = r.coherence||7;
+    }
+
+    addErrors(r.errors||[], 'el'+s);
+    if (r.errors) S.errs.push(...r.errors);
+    if (r.key_lod) showLOD(s, r.key_lod);
+  } catch(e) {
+    document.getElementById('th'+s).classList.add('hidden');
+    document.getElementById('txt'+s).innerHTML = transcript + '<div class="tiny" style="color:var(--pink);margin-top:8px"><i class="ti ti-alert-circle"></i> Could not connect to API. Check your key.</div>';
+  }
+  document.getElementById('ba'+s).disabled = false;
+}
+
+function setScoreGrid(gridId, labels, vals) {
+  const g = document.getElementById(gridId); if (!g) return;
+  const cards = g.querySelectorAll('.scard');
+  vals.forEach((v,i) => {
+    if (cards[i]) {
+      cards[i].querySelector('.sv').textContent = v+'/10';
+      cards[i].className = 'scard '+(v>=7?'g':v>=5?'w':'b');
+    }
+  });
+}
+function setMetric(id, v) {
+  const el = document.getElementById(id); if (!el) return;
+  el.querySelector('.sv').textContent = v+'/10';
+  el.className = 'scard '+(v>=7?'g':v>=5?'w':'b');
+}
+function setBar(fillId, valId, pct, label) {
+  const f = document.getElementById(fillId); if (f) f.style.width = pct+'%';
+  const v = document.getElementById(valId); if (v) v.textContent = label;
+}
+function addErrors(errs, listId) {
+  const list = document.getElementById(listId);
+  if (!errs || errs.length === 0) {
+    if (!list.querySelector('.eitem')) list.innerHTML = '<div class="tiny" style="padding:.5rem 0;color:var(--green)">No significant errors found</div>';
+    return;
+  }
+  if (!list.querySelector('.eitem')) list.innerHTML = '';
+  errs.forEach(e => {
+    const d = document.createElement('div'); d.className = 'eitem';
+    const url = e.lod_url || 'https://lod.lu';
+    d.innerHTML = `<div class="et">${e.type||'Grammar'}</div>
+<div class="es">"${e.said||''}"</div>
+<div class="ec">→ <span class="corr">"${e.correction||''}"</span></div>
+<div class="eexp">${e.explanation||''}</div>
+<a href="${url}" target="_blank" class="lod-link"><i class="ti ti-external-link" style="font-size:11px"></i> LOD.lu</a>`;
+    list.appendChild(d);
+  });
+}
+function showLOD(s, entry) {
+  const panel = document.getElementById('lod'+s);
+  const content = document.getElementById('lod'+s+'-content');
+  let conj = '';
+  if (entry.conjugation) {
+    conj = `<div class="conj-grid" style="margin-top:8px">${Object.entries(entry.conjugation).map(([p,f])=>`<div class="cjc"><div class="pro">${p}</div><div class="form">${f}</div></div>`).join('')}</div>`;
+  }
+  content.innerHTML = `<div style="display:flex;align-items:baseline;gap:5px;margin-bottom:5px">
+    <span class="lod-word">${entry.word}</span>
+    <span class="lod-pos">${entry.pos||''}</span>
+  </div>
+  <div class="lod-def">${entry.def_en||''}</div>
+  ${conj}
+  <a href="https://lod.lu/article/${encodeURIComponent(entry.word)}" target="_blank" class="btn" style="margin-top:10px;font-size:11px">
+    <i class="ti ti-external-link"></i> Full entry in LOD.lu
+  </a>`;
+  panel.classList.remove('hidden');
+}
+
+/* ── LISTENING ───────────────────────────────────────── */
+let _hvTab = 0;
+function hvTab(i, el) {
+  _hvTab = i;
+  document.querySelectorAll('.hvtab').forEach((t,j) => t.className = 'hvtab'+(j===i?' on':''));
+  renderHV();
+}
+function renderHV() {
+  const hv = HV[_hvTab], ans = S.hvAns[_hvTab]||{};
+  let h = `<div class="hv-play-row">
+    <button class="play-btn" onclick="playAudio(${_hvTab})"><i class="ti ti-player-play" id="pai${_hvTab}"></i></button>
+    <div><div style="font-size:13px;font-weight:500;color:var(--ink)">${hv.t}</div>
+    <div class="tiny">Tap to play (simulated)</div></div>
+  </div>
+  <div class="hv-text">${hv.text}</div>`;
+  hv.qs.forEach((q,qi) => {
+    const sel = ans[qi] !== undefined ? ans[qi] : -1;
+    h += `<div class="q-block"><div class="q-text">${qi+1}. ${q.q}</div><div class="q-opts">`;
+    q.os.forEach((o,oi) => {
+      let cls = 'q-opt';
+      if (sel !== -1) { if (oi===q.a) cls+=' correct'; else if (oi===sel) cls+=' wrong'; }
+      else if (oi===sel) cls+=' picked';
+      h += `<div class="${cls}" onclick="hvAns(${_hvTab},${qi},${oi})">
+        <i class="ti ${sel!==-1?(oi===q.a?'ti-check':'ti-circle'):'ti-circle'}" style="font-size:12px"></i> ${o}
+      </div>`;
+    });
+    h += '</div></div>';
+  });
+  document.getElementById('hv-body').innerHTML = h;
+  updateHVScore();
+}
+function hvAns(tab, qi, oi) {
+  if (!S.hvAns[tab]) S.hvAns[tab] = {};
+  S.hvAns[tab][qi] = oi;
+  renderHV();
+}
+function updateHVScore() {
+  let tot=0, cor=0;
+  HV.forEach((hv,ti) => { hv.qs.forEach((q,qi) => { tot++; if(S.hvAns[ti]&&S.hvAns[ti][qi]===q.a) cor++; }); });
+  S.sc.hv = tot > 0 ? Math.round(cor/tot*100) : 0;
+  document.getElementById('hv-val').textContent = cor+'/'+tot;
+  setBar('hv-bar','hv-lbl', tot>0?cor/tot*100:0, tot>0?Math.round(cor/tot*100)+'%':'—');
+}
+function playAudio(i) {
+  const icon = document.getElementById('pai'+i);
+  if (icon) { icon.className='ti ti-player-pause'; setTimeout(()=>{icon.className='ti ti-player-play';},3000); }
+}
+
+/* ── RESULTS ─────────────────────────────────────────── */
+function renderResults() {
+  const n = Math.max(S.calls, 1);
+  const spk = Math.round((S.sc.gr+S.sc.fl+S.sc.vo+S.sc.inn)/(n*4)*100);
+  const hv = S.sc.hv || 67;
+  const avg = Math.round((spk+hv)/2);
+  const pass = avg >= 50 || spk >= 50;
+
+  const ring = document.getElementById('res-ring');
+  document.getElementById('res-pct').textContent = avg+'%';
+  ring.className = 'res-ring '+(pass?'pass':'fail');
+  document.getElementById('res-verdict').textContent = pass ? 'Passed ✓' : 'Keep practicing';
+  document.getElementById('res-sub').textContent = pass
+    ? 'You meet the INLL Sproochentest standard.'
+    : 'You need ≥50% to pass. Study the errors below.';
+
+  document.getElementById('breakdown-scores').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+      <div class="scard ${spk>=70?'g':spk>=50?'w':'b'}"><div class="sv">${spk}%</div><div class="sl">Speaking</div></div>
+      <div class="scard ${hv>=70?'g':hv>=50?'w':'b'}"><div class="sv">${hv}%</div><div class="sl">Listening</div></div>
+    </div>
+    <div class="bar-row"><span class="bar-lbl">Speaking</span><div class="bar-track"><div class="bar-fill o" style="width:${spk}%"></div></div><span class="bar-val">${spk}%</span></div>
+    <div class="bar-row"><span class="bar-lbl">Listening</span><div class="bar-track"><div class="bar-fill p" style="width:${hv}%"></div></div><span class="bar-val">${hv}%</span></div>`;
+
+  const ae = document.getElementById('all-err');
+  if (S.errs.length === 0) {
+    ae.innerHTML = '<div class="tiny" style="padding:.5rem 0;color:var(--green)">No grammar errors recorded — great work!</div>';
+  } else {
+    ae.innerHTML = '';
+    S.errs.forEach(e => {
+      const d = document.createElement('div'); d.className = 'eitem';
+      d.innerHTML = `<div class="et">${e.type||'Error'}</div>
+<div class="es">"${e.said||''}"</div>
+<div class="ec">→ <span class="corr">"${e.correction||''}"</span></div>
+<div class="eexp">${e.explanation||''}</div>
+<a href="${e.lod_url||'https://lod.lu'}" target="_blank" class="lod-link"><i class="ti ti-external-link" style="font-size:11px"></i> LOD.lu</a>`;
+      ae.appendChild(d);
+    });
+  }
+
+  const steps = pass ? [
+    ['Register for the official test','myinl.inll.lu','https://myinl.inll.lu'],
+    ['Check pronunciation','sproochmaschinn.lu','https://sproochmaschinn.lu'],
+    ['N-rule spell checker','spellchecker.lu','https://spellchecker.lu'],
+    ['INLL podcast','Poterkëscht','https://www.inll.lu/en/poterkescht-the-podcast-in-luxembourgish-from-inll/']
+  ] : [
+    ['Study error corrections in LOD','lod.lu','https://lod.lu'],
+    ['Structured online lessons','llo.lu','https://llo.lu/en'],
+    ['B1 listening drills','sdl.inll.lu','https://sdl.inl
