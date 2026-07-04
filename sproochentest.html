@@ -7,6 +7,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Lora:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/tabler-icons.min.css">
+<script>
+function saveKey() {
+  const k = document.getElementById('api-key-input').value.trim();
+  if (!k.startsWith('sk-')) { alert('Please enter a valid Anthropic API key starting with sk-'); return; }
+  window._apiKey = k;
+  localStorage.setItem('sproochentest_key', k);
+  document.getElementById('modal').style.display = 'none';
+}
+function changeKey() {
+  document.getElementById('api-key-input').value = window._apiKey || '';
+  document.getElementById('modal').style.display = 'flex';
+}
+</script>
 <style>
 /* ─── TOKENS ─────────────────────────────────────────── */
 :root {
@@ -1172,28 +1185,16 @@ const SAMPLE_DESCS = [
 
 /* ── STATE ───────────────────────────────────────────── */
 let S = {
-  apiKey: '', topicOpts: [], selTopic: null, curQ: 0,
+  topicOpts: [], selTopic: null, curQ: 0,
   rec: {1:false, 2:false}, secs: {1:0, 2:0},
   timers: {1:null, 2:null}, wints: {1:null, 2:null},
   sc: {gr:0,fl:0,vo:0,inn:0,det:0,coh:0,hv:0},
   errs: [], calls: 0, selPhoto: null, hvTab: 0, hvAns: {}
 };
 
-/* ── API KEY ─────────────────────────────────────────── */
-function saveKey() {
-  const k = document.getElementById('api-key-input').value.trim();
-  if (!k.startsWith('sk-')) { alert('Please enter a valid Anthropic API key starting with sk-'); return; }
-  S.apiKey = k;
-  localStorage.setItem('sproochentest_key', k);
-  document.getElementById('modal').style.display = 'none';
-}
-function changeKey() {
-  document.getElementById('api-key-input').value = S.apiKey || '';
-  document.getElementById('modal').style.display = 'flex';
-}
 window.onload = () => {
   const saved = localStorage.getItem('sproochentest_key');
-  if (saved) { S.apiKey = saved; document.getElementById('modal').style.display = 'none'; }
+  if (saved) { window._apiKey = saved; document.getElementById('modal').style.display = 'none'; }
   initWave('wv1', 18); initWave('wv2', 18);
   renderHV();
 };
@@ -1353,7 +1354,7 @@ function discard(s) {
 
 /* ── ANALYZE ─────────────────────────────────────────── */
 async function analyze(s) {
-  if (!S.apiKey) { changeKey(); return; }
+  if (!window._apiKey) { changeKey(); return; }
   document.getElementById('ba'+s).disabled = true;
   const isPhoto = s === 2;
   const transcript = isPhoto
@@ -1374,7 +1375,7 @@ async function analyze(s) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': S.apiKey,
+        'x-api-key': window._apiKey,
         'anthropic-version': '2023-06-01',
         'anthropic-dangerous-direct-browser-access': 'true'
       },
